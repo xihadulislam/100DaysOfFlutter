@@ -24,61 +24,63 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  double _width = 100.0;
-  double _height = 100.0;
-
-
-  void inCreaseWidth(){
-    setState(() {
-      _width = _width >320 ? 100.0:_width+=50.0;
-    });
-
-  }
-  void inCreaseHeightanswidth(){
-    setState(() {
-      _height = _height >220 ? 100.0:_height+=50.0;
-      _width = _width >220 ? 100.0:_width+=50.0;
-    });
-
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("AnimatedContainer"),),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          
-          AnimatedContainer(
-            curve:  Curves.elasticInOut,
-            duration: Duration(seconds: 2),
-            height: _height,
-            width: _width,
-            color: Colors.amber,
-            child: FlatButton(
-              onPressed: ()=> inCreaseWidth(),
-              child: Text("tap to increase  width $_width"),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 200,
+            floating: false,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text("Day 3"),
             ),
-
           ),
-          SizedBox(
-            height: 20,
-          ),
-
-          AnimatedContainer(
-            duration: Duration(seconds: 2),
-            height: _height,
-            width: _width,
-            color: Colors.amber,
-            child: FlatButton(
-              onPressed: ()=> inCreaseHeightanswidth(),
-              child: Text("tap to increase"),
+          SliverFillRemaining(
+            child: Column(
+              children: [
+                Text(
+                  "Table",
+                  style: TextStyle(fontSize: 33),
+                ),
+                Table(
+                  border: TableBorder.all(),
+                  columnWidths: {0: FractionColumnWidth(.4)},
+                  children: [
+                    TableRow(children: [
+                      Container(
+                        height: 100,
+                        color: Colors.amber,
+                      ),
+                      Container(
+                        height: 100,
+                        color: Colors.blueAccent,
+                      ),
+                      Container(
+                        height: 100,
+                        color: Colors.deepPurple,
+                      ),
+                    ]),
+                    TableRow(children: [
+                      Container(
+                        height: 100,
+                        color: Colors.blueGrey,
+                      ),
+                      Container(
+                        height: 100,
+                        color: Colors.redAccent,
+                      ),
+                      Container(
+                        height: 100,
+                        color: Colors.yellowAccent,
+                      ),
+                    ]),
+                  ],
+                )
+              ],
             ),
-
           )
-
         ],
       ),
     );
