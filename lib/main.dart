@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Day 4, 5 6'),
     );
   }
 }
@@ -42,25 +42,77 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+      body: FutureBuilder(
+        future: getData(),
+          builder:(ctx,snapshort){
+
+          if(!snapshort.hasData){
+         return   Center(child: CircularProgressIndicator());
+          }else {
+            return ListView.builder(
+                itemCount: 1,
+                itemBuilder: (ctx,data)=> Item()
+            );
+          }
+          }
+          )
+    );
+  }
+
+  List<int> list ;
+
+  Future< List<int>> getData() async{
+
+   await  Future.delayed(
+        Duration(seconds: 2));
+
+   list = [1,2,3,4,5,6,7,78,8,8678,8,678,67,8,678,67,867,867,867,8,678,];
+    return list;
+  }
+
+}
+
+
+
+class Item extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (ctx)=> DetailsPage()));
+      },
+      leading: CircleAvatar(
+        child: Hero(
+            tag: "h",
+            child: Icon(Icons.home)),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+      title: Text("This is Title",style: TextStyle(fontSize: 16)),
+      subtitle: Text("this is subTitle"),
+    );
+  }
+}
+
+
+
+class DetailsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(40),
+          child: Container(
+            color: Colors.blue,
+            width: 200,
+            height: 200,
+            child: Hero(
+                tag: "h",
+                child: Icon(Icons.home,color: Colors.white,size: 54,)),
+
+          ),
+        ),
       ),
     );
   }
 }
+
